@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = "your-api-url";
+    const url = "https://demo-nodejs-crud.herokuapp.com/users";
     fetch(url)
       .then((response) => response.json())
       .then((result) => {
