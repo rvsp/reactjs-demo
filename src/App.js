@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = "https://demo-nodejs-crud.herokuapp.com/users";
+    const url = "http://localhost:5000/users";
     fetch(url)
       .then((response) => response.json())
       .then((result) => {
