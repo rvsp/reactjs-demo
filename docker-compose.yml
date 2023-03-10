@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  reactapp:
+    image: reactapp:v1
+    container_name: reactapp
+    restart: always
+    ports:
+      - "81:80"
