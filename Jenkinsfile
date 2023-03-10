@@ -20,7 +20,7 @@ pipeline{
               expression { BRANCH_NAME == 'dev' }
             }
             steps{
-                withCredentials([string(credentialsId: 'Docker_username', variable: 'docker_username'), string(credentialsId: 'Docker_Credi', variable: 'docker_password')]) {
+                DOCKERHUB_CREDENTIALS=credentials('dockerid') {
                 sh 'chmod 777 ./deploy.sh'
                 sh './deploy.sh'
                 }
@@ -31,8 +31,8 @@ pipeline{
               expression { BRANCH_NAME == 'master' }
             }
             steps {
-                withCredentials([string(credentialsId: 'Docker_username', variable: 'docker_username'), string(credentialsId: 'Docker_Credi', variable: 'docker_password')]) {
-                 sh 'sudo docker login -u satheeka -p ${docker_password}'
+                DOCKERHUB_CREDENTIALS=credentials('dockerid') {
+                 sh 'sudo docker login -u satheeka -p satheesh1'
                  sh 'sudo docker tag react-app:latest satheeka/prod:latest'
                  sh 'sudo docker push satheeka/prod:latest'
                 }           

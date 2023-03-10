@@ -1,8 +1,9 @@
 version: '3.9'
 services:
-  reactapp:
-    image: reactapp:v1
-    container_name: reactapp
+  app:
+    image: satheeka/prod:latest
     restart: always
     ports:
       - "81:80"
+    tty: true
+    stdin_open: true
