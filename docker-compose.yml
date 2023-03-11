@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  app:
+    image: satheeka/prod:latest
+    restart: always
+    ports:
+      - "81:80"
+    tty: true
+    stdin_open: true
