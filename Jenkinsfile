@@ -10,7 +10,7 @@ pipeline {
                 script {myfirstpush-reactjs-demo
                     def dockerImage = docker.build('suganyamadhan1996/:dev-${env.BUILD_NUMBER}')
                     
-                    withDockerRegistry([dockerhub: 'docker-hub-credentials', url: '']) {
+                    withDockerRegistry([dockerhub: 'docker-hub-credentials', url: 'https://hub.docker.com/r/suganyamadhan1996']) {
                         dockerImage.push()
                     }
                 }
