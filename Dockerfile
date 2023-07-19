@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Create the production image with Nginx
+# Stage 2: Create the production image with Nginx file
 FROM nginx:latest as production
 COPY --from=development /usr/src/react-app/build /usr/share/nginx/html
 EXPOSE 80
