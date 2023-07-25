@@ -1,30 +1,31 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_REGISTRY = 'hub.docker.com'  // Replace with the appropriate Docker registry
-        DOCKER_USERNAME = credentials('suganyamadhan1996')  // Replace 'docker-hub-username' with your Docker Hub credentials ID
-        DOCKER_PASSWORD = credentials('dckr_pat_2nxtl_DFKNmGcUV2mWHfSODdZnQ')  // Replace 'docker-hub-password' with your Docker Hub credentials ID
-        IMAGE_NAME = 'suganyamadhan1996/dev:myfirstpush-reactjs-demo'  // Replace with your Docker Hub username and image name
-        IMAGE_TAG = 'latest'  // You can set a specific tag or use 'latest'
-    }
-
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout') {
             steps {
-                script {
-                    docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_USERNAME}") {
-                        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-                    }
-                }
+                // Check out the code from the 'dev' branch in the GitHub repository
+                checkout([$class: 'GitSCM',
+                          branches: [[name: 'dev']],
+                          userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git']]])
             }
         }
-
-        stage('Push Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
+                // Build the Docker image and tag it
                 script {
-                    docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_USERNAME}") {
-                        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                    def imageName = "suganyamadhan1996/dev:myfirstpush-reactjs-demo"
+                    def imageTag = "latest"
+
+                    // Build the Docker image
+                    docker.build(imageName + ":" + imageTag, ".")
+
+                    // Log in to Docker Hub with your credentials
+                    withDockerRegistry([credentialsId: "suganyamadhan1996"]) {
+                        // Push the Docker image to Docker Hub
+                        docker.withRegistry("", "dockerhub") {
+                            dockerImage.push()
+                        }
                     }
                 }
             }
