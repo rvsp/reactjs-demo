@@ -14,11 +14,10 @@ pipeline {
             steps {
                 // Build the Docker image and tag it
                 script {
-                    def imageName = "suganyamadhan1996/dev:myfirstpush-reactjs-demo"
-                    def imageTag = "latest"
+                    def dockerImageName = "suganyamadhan1996/dev:myfirstpush-reactjs-demo"
 
                     // Build the Docker image
-                    docker.build(imageName + ":" + imageTag, ".")
+                    docker.build(dockerImageName, ".")
 
                     // Log in to Docker Hub with your credentials
                     withDockerRegistry([credentialsId: "234"]) {
