@@ -1,31 +1,32 @@
+
 pipeline {
     agent any
 
+    environment {
+        DOCKER_REGISTRY = 'docker.io'  // Replace with the appropriate Docker registry
+        DOCKER_USERNAME = credentials('suganyamadhan1996')  // Replace 'docker-hub-username' with your Docker Hub credentials ID
+        DOCKER_PASSWORD = credentials('Suman#123')  // Replace 'docker-hub-password' with your Docker Hub credentials ID
+        IMAGE_NAME = 'suganyamadhan1996/dev:myfirstpush-reactjs-demo'  // Replace with your Docker Hub username and image name
+        IMAGE_TAG = 'latest'  // You can set a specific tag or use 'latest'
+    }
+
     stages {
-        stage('Build and Push Docker Image') {
-            when {
-                branch 'dev'
-            }
+        stage('Build Docker Image') {
             steps {
-                script {myfirstpush-reactjs-demo
-                    def dockerImage = docker.build('suganyamadhan1996/:dev-${env.BUILD_NUMBER}')
-                    
-                    withDockerRegistry([dockerhub: 'docker-hub-credentials', url: 'https://hub.docker.com/r/suganyamadhan1996']) {
-                        dockerImage.push()
+                script {
+                    docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_USERNAME}") {
+                        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
             }
         }
 
-        stage('Push to Prod Repository') {
-            when {
-                branch 'master'
-            }
+        stage('Push Docker Image') {
             steps {
                 script {
-                    def dockerImage = docker.image('suganyamadhan1996/myfirstpush-reactjs-demo:dev-${env.BUILD_NUMBER}')
-                    
-                    dockerImage.push('suganyamadhan1996/myfirstpush-reactjs-demo:prod-${env.BUILD_NUMBER}')
+                    docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_USERNAME}") {
+                        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                    }
                 }
             }
         }
