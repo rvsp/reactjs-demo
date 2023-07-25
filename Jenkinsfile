@@ -21,7 +21,7 @@ pipeline {
                     docker.build(imageName + ":" + imageTag, ".")
 
                     // Log in to Docker Hub with your credentials
-                    withDockerRegistry([credentialsId: "suganyamadhan1996"]) {
+                    withDockerRegistry([credentialsId: "234"]) {
                         // Push the Docker image to Docker Hub
                         docker.withRegistry("", "dockerhub") {
                             dockerImage.push()
