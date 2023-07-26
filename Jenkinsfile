@@ -6,21 +6,25 @@ pipeline {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub password
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
-        IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image ta
+        IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image tag
+        REPO_BRANCH = 'dev' // Specify the branch to build the Docker image from
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from GitHub "dev" branc
-                git branch: 'dev', url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
+                // Checkout the code from GitHub "dev" branch
+                git branch: REPO_BRANCH, url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image using Docker Compose
-                sh 'docker-compose -f docker-compose.yml build'
+                // Set working directory to where the Dockerfile is located
+                dir('path/to/your/dockerfile') {
+                    // Build the Docker image
+                    sh 'docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} .'
+                }
             }
         }
 
