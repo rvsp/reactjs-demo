@@ -21,9 +21,6 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    // Add Jenkins user to the docker group and restart the Jenkins service
-                    sh 'sudo usermod -aG docker jenkins'
-                    sh 'sudo systemctl restart jenkins'
                     // Build the Docker image without sudo
                     sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
                 }
