@@ -3,6 +3,6 @@ services:
   myapp:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: reactjs-demo/Dockerfile
     ports:
       - 80:80
