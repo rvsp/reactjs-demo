@@ -2,7 +2,7 @@ version: '3'
 services:
   myapp:
     build:
-      context: .
-      dockerfile: reactjs-demo/Dockerfile
+      context: /var/lib/jenkins/workspace/reactjs_demo/reactjs-demo
+      dockerfile: Dockerfile
     ports:
       - 80:80
