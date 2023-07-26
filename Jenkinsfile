@@ -13,25 +13,18 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub "dev" branch
-                git branch: 'dev',
-                    credentialsId: 'YOUR_GITHUB_CREDENTIALS_ID', // Replace with your GitHub credentials ID
-                    url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
+                git branch: 'dev', url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
-                // Build the Docker image using the Dockerfile in the root of the repository
-                sh 'docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} .'
-            }
-        }
-
-        stage('Push to Docker Hub') {
-            steps {
-                // Push the Docker image to Docker Hub
+                // Build and push the Docker image using Docker Compose
+                sh "docker-compose -f docker-compose.yml build myapp"
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
-                        docker.image("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}").push()
+                        sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                        sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
                     }
                 }
             }
