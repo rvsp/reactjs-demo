@@ -21,7 +21,7 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}")
+                    sh 'sudo docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}")'
                 }
             }
         }
