@@ -17,13 +17,17 @@ pipeline {
             }
         }
 
+        stage('Copy Dockerfile') {
+            steps {
+                // Copy the Dockerfile from the "reactjs-demo" directory to the root directory
+                sh 'cp reactjs-demo/Dockerfile .'
+            }
+        }
+
         stage('Build and Push Docker Image') {
             steps {
-                // Set the build context to the "reactjs-demo" directory
-                dir('reactjs-demo') {
-                    // Build the Docker image using Docker
-                    sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
-                }
+                // Build the Docker image using the copied Dockerfile
+                sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
                         // Push the Docker image to Docker Hub
