@@ -20,7 +20,8 @@ pipeline {
         stage('Build and Push Docker Image') {
             steps {
                 // Set the build context to the directory containing docker-compose.yml
-                dir('reactjs-demo') {
+               dir('/var/lib/jenkins/workspace/reactjs_demo/reactjs-demo') {
+ {
                     // Build the Docker image using docker-compose
                     sh 'docker-compose build myapp'
                 }
