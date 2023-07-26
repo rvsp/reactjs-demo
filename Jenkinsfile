@@ -8,9 +8,6 @@ pipeline {
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
         IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image tag
     }
-    
-    // ... Rest of the pipeline stages and post section remain unchanged ...
-}
 
     stages {
         stage('Checkout') {
@@ -19,7 +16,7 @@ pipeline {
                 git 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
             }
         }
-        
+
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image
@@ -28,7 +25,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Push to Docker Hub') {
             steps {
                 // Push the Docker image to Docker Hub
@@ -40,7 +37,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Pipeline completed successfully!'
