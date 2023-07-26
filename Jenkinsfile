@@ -17,10 +17,21 @@ pipeline {
             }
         }
 
-        stage('Copy Dockerfile') {
+        stage('Verify Directory and Copy Dockerfile') {
             steps {
-                // Copy the Dockerfile from the "reactjs-demo" directory to the root directory
-                sh 'cp reactjs-demo/Dockerfile .'
+                script {
+                    // List the contents of the workspace directory
+                    sh 'ls -al'
+
+                    // Check if the "reactjs-demo" directory exists in the workspace
+                    def reactjsDemoDir = file('reactjs-demo')
+                    if (reactjsDemoDir.exists()) {
+                        // Copy the Dockerfile from the "reactjs-demo" directory to the root directory
+                        sh 'cp reactjs-demo/Dockerfile .'
+                    } else {
+                        error "Directory 'reactjs-demo' not found in the workspace."
+                    }
+                }
             }
         }
 
