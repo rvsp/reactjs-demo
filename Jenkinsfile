@@ -19,15 +19,16 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             steps {
-                // Set the build context to the root of the repository
+                // Set the build context to the directory containing docker-compose.yml
                 dir('reactjs-demo') {
-                    // Build and push the Docker image using Docker Compose
-                    sh "docker-compose -f docker-compose.yml build myapp"
-                    script {
-                        docker.withRegistry('https://index.docker.io/v1/', '567') {
-                            sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
-                            sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
-                        }
+                    // Build the Docker image using Docker Compose
+                    sh "docker-compose build myapp"
+                }
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', '567') {
+                        // Tag and push the Docker image to Docker Hub
+                        sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                        sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
                     }
                 }
             }
@@ -43,3 +44,4 @@ pipeline {
         }
     }
 }
+
