@@ -19,9 +19,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image
-                script {
-                    sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} -f reactjs-demo/Dockerfile ."
+                // Set working directory to the root directory of the repository
+                dir('reactjs-demo') {
+                    // Build the Docker image
+                    sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} -f Dockerfile ."
                 }
             }
         }
