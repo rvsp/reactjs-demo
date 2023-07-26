@@ -19,10 +19,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image
+                // Build the Docker image using Docker Compose from the "dev" branch
                 script {
-                    // Build the Docker image without sudo
-                    sh 'docker build --cache-from=${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} .'
+                    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml build'
                 }
             }
         }
