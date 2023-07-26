@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub
-                git 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
+                git 'https://github.com/suganyaanbalagan123/reactjs-demo/Dockerfile.git'
             }
         }
         
