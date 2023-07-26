@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from GitHub "dev" branch
+                // Checkout the code from GitHub "dev" branc
                 git branch: 'dev', url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
             }
         }
