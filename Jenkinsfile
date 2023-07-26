@@ -7,6 +7,7 @@ pipeline {
         DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub password
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
         IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image tag
+        DOCKERFILE_PATH = 'reactjs-demo/Dockerfile' // Path to the Dockerfile in the "dev" branch
     }
 
     stages {
@@ -19,12 +20,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Set working directory to the location of the Dockerfile in the "dev" branch
-                dir('reactjs-demo') { // Assuming Dockerfile is located in the "reactjs-demo" directory in the "dev" branch
-                    // Build the Docker image
-                    script {
-                        sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
-                    }
+                // Build the Docker image
+                script {
+                    sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} -f ${DOCKERFILE_PATH} ."
                 }
             }
         }
