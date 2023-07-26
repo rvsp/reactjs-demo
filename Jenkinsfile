@@ -21,9 +21,7 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                        docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}")
-                    }
+                    docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}")
                 }
             }
         }
