@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    // Define environment variables (update these with your credentials
+    // Define environment variables (update these with your credentials)
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub password
@@ -19,10 +19,8 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image using Docker Compose from the "dev" branch
-                script {
-                    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml build'
-                }
+                // Build the Docker image using Docker Compose
+                sh 'docker-compose -f docker-compose.yml build'
             }
         }
 
