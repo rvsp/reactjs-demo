@@ -22,7 +22,7 @@ pipeline {
                 // Set the build context to the "reactjs-demo" directory
                 dir('reactjs-demo') {
                     // Build the Docker image using Docker Compose
-                    sh "docker-compose -f build myapp"
+                    sh "docker-compose -f build "
                 }
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
