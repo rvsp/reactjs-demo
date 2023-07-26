@@ -5,9 +5,7 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_PASSWORD = credentials('dckr_pat_2nxtl_DFKNmGcUV2mWHfSODdZnQ') // Jenkins credential ID for Docker Hub password
-        DOCKER_HUB_REPO = 'suganyamadhan1996
-/
-dev'
+        DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
         IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image ta
     }
     
