@@ -21,7 +21,7 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}")
+                    docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}", "-f reactjs-demo/Dockerfile reactjs-demo")
                 }
             }
         }
