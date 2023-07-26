@@ -13,18 +13,16 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub "dev" branch
-                script {
-                    git branch: 'dev',
-                        credentialsId: 'YOUR_GITHUB_CREDENTIALS_ID', // Replace with your GitHub credentials ID
-                        url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
-                }
+                git branch: 'dev',
+                    credentialsId: 'YOUR_GITHUB_CREDENTIALS_ID', // Replace with your GitHub credentials ID
+                    url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image using the Dockerfile in the "dev" branch
-                sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} -f reactjs-demo/Dockerfile reactjs-demo"
+                // Build the Docker image using docker-compose
+                sh 'docker-compose -f reactjs-demo/docker-compose.yml build'
             }
         }
 
