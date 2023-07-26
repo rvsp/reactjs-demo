@@ -22,7 +22,8 @@ pipeline {
                 // Build the Docker image
                 script {
                     // Build the Docker image without sudo
-                    sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
+                    sh 'docker build --cache-from=${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} .'
+                }
                 }
             }
         }
