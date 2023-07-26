@@ -19,9 +19,9 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             steps {
-                // Set the build context to the directory containing Dockerfile (reactjs-demo directory)
+                // Set the build context to the "reactjs-demo" directory
                 dir('reactjs-demo') {
-                    // Build the Docker image using Docker build with the Dockerfile in the reactjs-demo directory
+                    // Build the Docker image using Docker
                     sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
                 }
                 script {
