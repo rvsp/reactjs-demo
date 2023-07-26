@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub "dev" branch
-                git 899 branch: 'dev', url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git'
+                checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git']]])
             }
         }
 
