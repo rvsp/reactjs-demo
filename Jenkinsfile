@@ -21,8 +21,8 @@ pipeline {
             steps {
                 // Set the build context to the directory containing docker-compose.yml
                 dir('reactjs-demo') {
-                    // Build the Docker image using Docker Compose
-                    sh "docker-compose build docker-compose.yml"
+                    // Build the Docker image using docker-compose
+                    dockerComposeBuild(options: 'myapp')
                 }
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
@@ -44,4 +44,3 @@ pipeline {
         }
     }
 }
-
