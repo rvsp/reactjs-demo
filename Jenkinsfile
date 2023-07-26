@@ -4,7 +4,7 @@ pipeline {
     // Define environment variables (update these with your credentials)
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
-        DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub passwor
+        DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub password
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
         IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image tag
     }
@@ -19,12 +19,15 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             steps {
-                // Build and push the Docker image using Docker Compose
-                sh "docker-compose -f docker-compose.yml build myapp"
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', '567') {
-                        sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
-                        sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                // Set the build context to the root of the repository
+                dir('reactjs-demo') {
+                    // Build and push the Docker image using Docker Compose
+                    sh "docker-compose -f docker-compose.yml build myapp"
+                    script {
+                        docker.withRegistry('https://index.docker.io/v1/', '567') {
+                            sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                            sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                        }
                     }
                 }
             }
