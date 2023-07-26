@@ -8,7 +8,7 @@ pipeline {
         DOCKER_HUB_REPO = 'suganyamadhan1996
 /
 dev'
-        IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image tag
+        IMAGE_TAG = "${env.BUILD_NUMBER}" // Using Jenkins build number as the Docker image ta
     }
     
     stages {
