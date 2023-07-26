@@ -21,8 +21,8 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image using docker-compose
-                sh 'docker-compose -f reactjs-demo/docker-compose.yml build'
+                // Build the Docker image using the Dockerfile in the root of the repository
+                sh 'docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} .'
             }
         }
 
