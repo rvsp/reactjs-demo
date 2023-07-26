@@ -17,31 +17,17 @@ pipeline {
             }
         }
 
-        stage('Verify Directory and Copy Dockerfile') {
-            steps {
-                script {
-                    // List the contents of the workspace directory
-                    sh 'ls -al'
-
-                    // Check if the "reactjs-demo" directory exists in the workspace
-                    def reactjsDemoDir = file('reactjs-demo')
-                    if (reactjsDemoDir.exists()) {
-                        // Copy the Dockerfile from the "reactjs-demo" directory to the root directory
-                        sh 'cp reactjs-demo/Dockerfile .'
-                    } else {
-                        error "Directory 'reactjs-demo' not found in the workspace."
-                    }
-                }
-            }
-        }
-
         stage('Build and Push Docker Image') {
             steps {
-                // Build the Docker image using the copied Dockerfile
-                sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
+                // Set the build context to the "reactjs-demo" directory
+                dir('reactjs-demo') {
+                    // Build the Docker image using Docker Compose
+                    sh "docker-compose build myapp"
+                }
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
-                        // Push the Docker image to Docker Hub
+                        // Tag and push the Docker image to Docker Hub
+                        sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
                         sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
                     }
                 }
