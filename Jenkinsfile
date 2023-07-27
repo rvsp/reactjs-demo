@@ -31,7 +31,7 @@ pipeline {
 
                 // Tag and push the Docker image to Docker Hub
                 sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
-                sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:latest"
+                sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
             }
         }
     }
