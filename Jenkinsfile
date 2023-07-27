@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    // Define environment variables (update these with your credentials)
+    // Define environment variables (update these with your credentias)
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
