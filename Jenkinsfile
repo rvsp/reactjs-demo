@@ -5,7 +5,7 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
-        DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub password
+        DOCKER_HUB_PASSWORD = credentials('777') // Jenkins credential ID for Docker Hub password
     }
 
     stages {
@@ -25,7 +25,7 @@ pipeline {
                 }
 
                 // Authenticate with Docker Hub using --password-stdin
-                withCredentials([string(credentialsId: '567', variable: 'DOCKER_HUB_PASSWORD')]) {
+                withCredentials([string(credentialsId: '777', variable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
                 }
 
