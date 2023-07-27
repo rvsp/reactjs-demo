@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -23,9 +22,9 @@ pipeline {
                     // Build the Docker image using docker-compose
                     sh 'docker-compose build myapp'
                 }
-
+                
                 // Authenticate and push the Docker image to Docker Hub
-                docker.withRegistry('https://hub.docker.com/', '567') {
+                withDockerRegistry(credentialsId: '567', url: 'https://hub.docker.com/') {
                     // Tag and push the Docker image to Docker Hub
                     sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
                     sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
