@@ -27,6 +27,10 @@ pipeline {
                 withDockerRegistry(credentialsId: '567', url: 'https://hub.docker.com/') {
                     // Tag and push the Docker image to Docker Hub
                     sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
+                    
+                    // Use --password-stdin to securely provide the password
+                    sh "echo \$dckr_pat_2nxtl_DFKNmGcUV2mWHfSODdZnQ | docker login -u \$DOCKER_HUB_USERNAME --password-stdin https://hub.docker.com/"
+                    
                     sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
                 }
             }
