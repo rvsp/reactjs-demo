@@ -27,7 +27,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
                         // Tag and push the Docker image to Docker Hub
-                        sh "docker tag reactjs-demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                        sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
                         sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${IMAGE_TAG}"
                     }
                 }
