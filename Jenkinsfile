@@ -4,7 +4,7 @@ pipeline {
     // Define environment variables (update these with your credentias)
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
-        DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
+        DOCKER_HUB_REPO = 'dev'
         DOCKER_HUB_PASSWORD = credentials('777') // Jenkins credential ID for Docker Hub password
     }
 
