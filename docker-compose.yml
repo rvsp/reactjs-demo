@@ -2,7 +2,7 @@ version: '3'
 services:
   myapp:
     build:
-      context: ./myapp
-      dockerfile: ./myapp/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 80:80
