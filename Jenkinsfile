@@ -5,6 +5,7 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_REPO = 'suganyamadhan1996/dev'
+        DOCKER_HUB_PASSWORD = credentials('567') // Jenkins credential ID for Docker Hub password
     }
 
     stages {
@@ -22,17 +23,15 @@ pipeline {
                     // Build the Docker image using docker-compose
                     sh 'docker-compose build myapp'
                 }
-                
-                // Authenticate and push the Docker image to Docker Hub
-                withDockerRegistry(credentialsId: '567', url: 'https://hub.docker.com/') {
-                    // Tag and push the Docker image to Docker Hub
-                    sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
-                    
-                    // Use --password-stdin to securely provide the password
-                    sh "echo \$dckr_pat_2nxtl_DFKNmGcUV2mWHfSODdZnQ | docker login -u \$DOCKER_HUB_USERNAME --password-stdin https://hub.docker.com/"
-                    
-                    sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
+
+                // Authenticate with Docker Hub using --password-stdin
+                withCredentials([string(credentialsId: '567', variable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
                 }
+
+                // Tag and push the Docker image to Docker Hub
+                sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
+                sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
             }
         }
     }
@@ -46,3 +45,4 @@ pipeline {
         }
     }
 }
+
