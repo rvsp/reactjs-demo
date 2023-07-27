@@ -19,11 +19,9 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             steps {
-                // Set the build context to the directory containing docker-compose.yml
-                dir('/var/lib/jenkins/workspace/reactjs_demo') {
-                    // Build the Docker image using docker-compose
-                    sh 'docker-compose build myapp'
-                }
+                // Build the Docker image using docker-compose
+                sh 'docker-compose build myapp'
+
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '567') {
                         // Tag and push the Docker image to Docker Hub
@@ -44,3 +42,4 @@ pipeline {
         }
     }
 }
+
