@@ -2,7 +2,7 @@ version: '3'
 services:
   myapp:
     build:
-      context: .
-      dockerfile: ./Dockerfile   # Specify the path to the Dockerfile
+      context: ./reactjs-demo  # Adjust the context path if needed
+      dockerfile: Dockerfile
     ports:
       - 80:80
