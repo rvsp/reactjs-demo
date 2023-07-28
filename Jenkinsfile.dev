@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    // Define environment variables (update these with your credentias)
+    environment {
+        DOCKER_HUB_USERNAME = 'suganyamadhan1996'
+        DOCKER_HUB_REPO = 'dev'
+        DOCKER_HUB_PASSWORD = credentials('777') // Jenkins credential ID for Docker Hub passwor
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from GitHub "dev" branch
+                checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git']]])
+            }
+        }
+
+        stage('Build and Push Docker Image') {
+            steps {
+                // Set the build context to the 'reactjs_pipeline' directory
+                dir('/var/lib/jenkins/workspace/reactjs_demo/') {
+                    // Build the Docker image using docker-compose
+                    sh 'docker-compose build myapp'
+                }
+
+                // Authenticate with Docker Hub using --password-stdin
+                withCredentials([string(credentialsId: '777', variable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
+                }
+
+                // Tag and push the Docker image to Docker Hub
+                sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
+                sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
+
