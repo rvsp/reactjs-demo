@@ -5,7 +5,7 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_DEV_REPO = 'dev' // Replace with your Docker Hub dev repository name
-        DOCKER_HUB_PROD_REPO = 'prod' // Replace with your Docker Hub prod repository na
+        DOCKER_HUB_PROD_REPO = 'prod' // Replace with your Docker Hub prod repository name
     }
 
     stages {
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 // Build and push the Docker image to the dev repository
                 script {
-                    docker.withRegistry("https://index.docker.io/v1/", “777") {
+                    docker.withRegistry("https://index.docker.io/v1/", "777") {
                         def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_DEV_REPO}:${env.BUILD_NUMBER}", ".")
                         customImage.push()
                     }
@@ -57,3 +57,4 @@ pipeline {
             echo 'Pipeline failed!'
         }
     }
+}
