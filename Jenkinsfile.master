@@ -8,7 +8,7 @@ pipeline {
         DOCKER_HUB_PROD_REPO = 'prod'
         DOCKER_HUB_PASSWORD = credentials('777') // Replace with your Jenkins credential ID for Docker Hub password
         GITHUB_USERNAME = 'suganyaanbalagan123'
-        GITHUB_ACCESS_TOKEN = credentials('999') // Replace with your Jenkins credential ID for GitHub access token or password
+        GITHUB_ACCESS_TOKEN = credentials('222') // Replace with your Jenkins credential ID for GitHub access token or password
     }
 
     stages {
