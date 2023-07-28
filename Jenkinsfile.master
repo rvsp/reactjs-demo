@@ -19,6 +19,7 @@ pipeline {
         stage('Build and Push Docker Image') {
             when {
                 // Execute this stage only if changes are pushed to the dev branch
+                dir('/var/lib/jenkins/workspace/reactjs_demo/')
                 branch 'dev'
             }
             steps {
@@ -35,6 +36,7 @@ pipeline {
         stage('Build and Push Prod Docker Image') {
             when {
                 // Execute this stage only if changes are pushed to the master branch
+                dir('/var/lib/jenkins/workspace/reactjs_demo_prod/')
                 branch 'master'
             }
             steps {
