@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    // Define environment variables for Docker Hub repositories and credentials
+    // Define environment variables for Docker Hub repositories and credential
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_DEV_REPO = 'dev' // Replace with your Docker Hub dev repository name
