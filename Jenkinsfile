@@ -1,37 +1,50 @@
 pipeline {
     agent any
 
-    // Define environment variables (update these with your credentias)
+    // Define environment variables for Docker Hub repositories and credentials
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
-        DOCKER_HUB_REPO = 'dev'
-        DOCKER_HUB_PASSWORD = credentials('777') // Jenkins credential ID for Docker Hub password
+        DOCKER_HUB_DEV_REPO = 'dev' // Replace with your Docker Hub dev repository name
+        DOCKER_HUB_PROD_REPO = 'prod' // Replace with your Docker Hub prod repository name
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from GitHub "dev" branch
-                checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git']]])
+                // Checkout the code from GitHub
+                checkout([$class: 'GitSCM', branches: [[name: 'dev'], [name: 'master']], userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git']]])
             }
         }
 
         stage('Build and Push Docker Image') {
+            when {
+                // Execute this stage only if changes are pushed to the dev branch
+                branch 'dev'
+            }
             steps {
-                // Set the build context to the 'reactjs_pipeline' directory
-                dir('/var/lib/jenkins/workspace/reactjs_demo/') {
-                    // Build the Docker image using docker-compose
-                    sh 'docker-compose build myapp'
+                // Build and push the Docker image to the dev repository
+                script {
+                    docker.withRegistry("https://index.docker.io/v1/", “777") {
+                        def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_DEV_REPO}:${env.BUILD_NUMBER}", ".")
+                        customImage.push()
+                    }
                 }
+            }
+        }
 
-                // Authenticate with Docker Hub using --password-stdin
-                withCredentials([string(credentialsId: '777', variable: 'DOCKER_HUB_PASSWORD')]) {
-                    sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
+        stage('Build and Push Prod Docker Image') {
+            when {
+                // Execute this stage only if changes are pushed to the master branch
+                branch 'master'
+            }
+            steps {
+                // Build and push the Docker image to the prod repository
+                script {
+                    docker.withRegistry("https://index.docker.io/v1/", "777") {
+                        def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_PROD_REPO}:${env.BUILD_NUMBER}", ".")
+                        customImage.push()
+                    }
                 }
-
-                // Tag and push the Docker image to Docker Hub
-                sh "docker tag reactjs_demo_myapp ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
-                sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_REPO}:${BUILD_NUMBER}"
             }
         }
     }
@@ -45,4 +58,5 @@ pipeline {
         }
     }
 }
+
 
