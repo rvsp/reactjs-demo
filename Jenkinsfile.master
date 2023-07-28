@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Authenticate with GitHub using the provided credentials
+                // Authenticate with GitHub using the provided credential
                 withCredentials([usernamePassword(credentialsId: '222', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
                     // Checkout the code from GitHub "dev" branch
                     checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git', credentialsId: '222']]])
