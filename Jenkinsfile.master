@@ -52,7 +52,7 @@ pipeline {
                     sh 'docker-compose build myapp'
                 }
 
-                // Authenticate with Docker Hub using --password-stdin
+                // Authenticate with Docker Hub using --password-stdinmm
                 withCredentials([usernamePassword(credentialsId: '111', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
                 }
