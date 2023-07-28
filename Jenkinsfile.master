@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    // Define environment variables for Docker Hub repositories and credential
+    // Define environment variables for Docker Hub repositories and credentials
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
         DOCKER_HUB_DEV_REPO = 'dev' // Replace with your Docker Hub dev repository name
@@ -19,15 +19,18 @@ pipeline {
         stage('Build and Push Docker Image') {
             when {
                 // Execute this stage only if changes are pushed to the dev branch
-                dir('/var/lib/jenkins/workspace/reactjs_demo/')
-                branch 'dev'
+                expression {
+                    return env.BRANCH_NAME == 'dev'
+                }
             }
             steps {
                 // Build and push the Docker image to the dev repository
                 script {
-                    docker.withRegistry("https://index.docker.io/v1/", "777") {
-                        def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_DEV_REPO}:${env.BUILD_NUMBER}", ".")
-                        customImage.push()
+                    dir('/var/lib/jenkins/workspace/reactjs_demo/') {
+                        docker.withRegistry("https://index.docker.io/v1/", "777") {
+                            def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_DEV_REPO}:${env.BUILD_NUMBER}", ".")
+                            customImage.push()
+                        }
                     }
                 }
             }
@@ -36,15 +39,18 @@ pipeline {
         stage('Build and Push Prod Docker Image') {
             when {
                 // Execute this stage only if changes are pushed to the master branch
-                dir('/var/lib/jenkins/workspace/reactjs_demo_prod/')
-                branch 'master'
+                expression {
+                    return env.BRANCH_NAME == 'master'
+                }
             }
             steps {
                 // Build and push the Docker image to the prod repository
                 script {
-                    docker.withRegistry("https://index.docker.io/v1/", "777") {
-                        def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_PROD_REPO}:${env.BUILD_NUMBER}", ".")
-                        customImage.push()
+                    dir('/var/lib/jenkins/workspace/reactjs_demo_prod/') {
+                        docker.withRegistry("https://index.docker.io/v1/", "777") {
+                            def customImage = docker.build("${DOCKER_HUB_USERNAME}/${DOCKER_HUB_PROD_REPO}:${env.BUILD_NUMBER}", ".")
+                            customImage.push()
+                        }
                     }
                 }
             }
