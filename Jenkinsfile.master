@@ -13,6 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Authenticate with GitHub using the provided credentials
+                // Authenticate with GitHub using the provided credentiall
                 withCredentials([usernamePassword(credentialsId: '222', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
                     // Checkout the code from GitHub "dev" branch
                     checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: 'https://github.com/suganyaanbalagan123/reactjs-demo.git', credentialsId: '222']]])
@@ -43,7 +44,14 @@ pipeline {
             steps {
                 // Merge dev branch with master (Optional: Perform the merge using Git commands)
                 sh 'git checkout master'
+<<<<<<< HEAD
                 sh 'git merge origin/dev'
+=======
+                sh 'git merge dev'            
+                sh 'git add .'
+                sh 'git commit -m "done"'
+                sh 'git pull master'
+>>>>>>> origin/dev
                 sh 'git push origin master'
 
                 // Build and push the Docker image to Docker Hub prod repository
