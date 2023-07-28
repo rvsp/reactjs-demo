@@ -29,7 +29,7 @@ pipeline {
                 }
 
                 // Authenticate with Docker Hub using --password-stdin
-                withCredentials([usernamePassword(credentialsId: '777', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: '111', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
                 }
 
@@ -53,7 +53,7 @@ pipeline {
                 }
 
                 // Authenticate with Docker Hub using --password-stdin
-                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_PASSWORD_ID', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: '111', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USERNAME --password-stdin"
                 }
 
