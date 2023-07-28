@@ -5,7 +5,7 @@ pipeline {
     // Define environment variables for Docker Hub repositories and credentials
     environment {
         DOCKER_HUB_USERNAME = 'suganyamadhan1996'
-        DOCKER_HUB_DEV_REPO = 'dev' // Replace with your Docker Hub dev repository name
+        DOCKER_HUB_DEV_REPO = 'dev' // Replace with your Docker Hub dev repository nam
         DOCKER_HUB_PROD_REPO = 'prod' // Replace with your Docker Hub prod repository nam
     }
 
