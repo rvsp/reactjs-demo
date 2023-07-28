@@ -43,10 +43,9 @@ pipeline {
             steps {
                 // Merge dev branch with master (Optional: Perform the merge using Git commands)
                 sh 'git checkout master'
-                sh 'git merge dev'            
+                sh 'git merge origin/dev'            
                 sh 'git add .'
                 sh 'git commit -m "done"'
-                sh 'git pull master'
                 sh 'git push origin master'
 
                 // Build and push the Docker image to Docker Hub prod repository
