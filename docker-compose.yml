@@ -1,0 +1,5 @@
+version: 'latest'
+services:
+  app:
+    build:
+      context: .
