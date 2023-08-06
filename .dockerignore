@@ -1,0 +1,9 @@
+# Ignore unnecessary files and directories
+node_modules/
+dist/
+*.log
+
+# Ignore source control files
+.git
+.gitignore
+
