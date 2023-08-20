@@ -6,3 +6,12 @@ services:
     ports:
     - 3000:3000
     stdin_open: true
+
+  jenkins:
+    image: jenkins/jenkins:latest
+    container_name: jenkins
+    ports:
+    - 8080:8080
+    - 50000:50000
+    volumes:
+    - /home/ubuntu/React-App/work:/var/jenkins_home
