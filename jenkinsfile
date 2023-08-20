@@ -26,7 +26,7 @@ pipeline {
      stage('Docker Push to dev') {
         steps {
         // Docker push based on branch name
-         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+         withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
            sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
            sh "docker tag onlyforcloudaws/react:v1 onlyforcloudaws/dev:lts"
            sh "docker push onlyforcloudaws/dev:lts"
@@ -35,7 +35,7 @@ pipeline {
     } 
      stage('Docker Push to prod') {
       steps {
-         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+         withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
            sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
            sh "docker tag onlyforcloudaws/react:v1 onlyforcloudaws/prod:lts"
            sh "docker push onlyforcloudaws/prod:lts"
@@ -52,5 +52,4 @@ pipeline {
 
        
 }
-
 
