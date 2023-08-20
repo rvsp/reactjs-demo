@@ -1,6 +1,0 @@
-version: '3'
-services:
-  my_images:
-    image: onlyforcloudaws/react:v1
-    ports:
-      - 80:80
