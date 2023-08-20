@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+ stages {
+     stage('Pull Code') {
+         steps {
+          // Pull code from GitHub repository
+            git 'https://github.com/onlyforcloudaws/reactjs-demo.git'
+        }
+      }
+
+     stage('Grant Permissions') {
+        steps {
+         // Grant executable permissions to a file
+           sh 'chmod +x build.sh'
+           sh 'chmod +x deploy.sh'
+        }
+      }
+
+     stage('Build') {
+         steps {
+        // Run build script
+          sh './build.sh'
+         }
+     }
+
+     stage('Docker Push to dev') {
+        steps {
+        // Docker push based on branch name
+         withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+           sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
+           sh "docker tag onlyforcloudaws/react:v1 onlyforcloudaws/dev:lts"
+           sh "docker push onlyforcloudaws/dev:lts"
+          }
+       }
+    } 
+     stage('Docker Push to prod') {
+      steps {
+         withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+           sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
+           sh "docker tag onlyforcloudaws/react:v1 onlyforcloudaws/prod:lts"
+           sh "docker push onlyforcloudaws/prod:lts"
+          }
+        }
+    }
+     stage('Deploy') {
+        steps {
+        // Run deploy script
+          sh './deploy.sh'
+        }
+     }
+    }                                
+
+       
+}
+
