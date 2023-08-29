@@ -18,3 +18,4 @@ services:
     - 50000:50000
     volumes:
     - /home/ubuntu/React-App/work:/var/jenkins_home
+    - /var/run/docker.sock:/var/run/docker.sock
