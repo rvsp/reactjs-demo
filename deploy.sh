@@ -26,3 +26,5 @@ else
 	echo "Starting the container"
 	docker-compose up -d
 fi
+
+docker ps -a

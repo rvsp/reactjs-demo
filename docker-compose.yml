@@ -8,7 +8,10 @@ services:
     stdin_open: true
 
   jenkins:
-    image: jenkins/jenkins:latest
+    build:
+      context: .
+      dockerfile: "Dockerfile-jenk"
+    image: jenkins-image
     container_name: jenkins
     ports:
     - 8080:8080
