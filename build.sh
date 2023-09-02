@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 #making dir for jenkins volume
 mkdir -p work
