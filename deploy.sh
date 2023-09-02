@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+cd /home/ubuntu/React-App
 echo "Building the docker container React"
 output=$(docker ps --format '{{.Names}}' | grep "React" || true)
 if  [[ "$output" == *"React"* ]];
