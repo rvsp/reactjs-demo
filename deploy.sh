@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+current_dir="$(cd "$(dirname "$0")" && pwd)"
+cd "$current_dir"
 cd /home/ubuntu/React-App
 echo "Building the docker container React"
 output=$(docker ps --format '{{.Names}}' | grep "React" || true)
