@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 echo "Building the docker container React"
 output=$(docker ps --format '{{.Names}}' | grep "React" || true)
