@@ -18,6 +18,7 @@ then
 	then	
 	        echo "The container are"
  	 	docker-compose restart React-App
+		docker ps -a
 	else
 		echo "Incorrect input"
 	fi
