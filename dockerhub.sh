@@ -6,8 +6,8 @@ if [ "$GIT_BRANCH" == "origin/dev" ]; then
     docker push oootuxed0ooo/dev:test
 elif [ "$GIT_BRANCH" == "origin/master" ]; then
     # Build and push to private DockerHub repo for master branch
-    docker build -t your-image-name:master .
-    docker login -u your-dockerhub-user -p your-dockerhub-password
-    docker push your-dockerhub-user/your-private-repo:master
+    docker build -t docker push oootuxed0ooo/prod:test .
+    docker login -u docker push oootuxed0oo -p $DOCKERHUB_PASSWORD
+    docker push oootuxed0ooo/prod:test
 fi
 
