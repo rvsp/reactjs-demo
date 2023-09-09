@@ -1,0 +1,5 @@
+#Jenkins accessible from my ip address only
+http://52.66.207.147:8080/
+
+#React accessible to anyone
+http://52.66.207.147:3000/
