@@ -1,5 +1,5 @@
 #!/bin/bash
-docker login -u oootuxed0oo -p $dockerpass
+docker login -u oootuxed0ooo -p $dockerpass
 if [ "$GIT_BRANCH" == "origin/dev" ]; then
     # Build and push to public DockerHub repo for dev branch
     docker build -t oootuxed0ooo/dev:test .
