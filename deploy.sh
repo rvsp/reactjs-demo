@@ -16,7 +16,7 @@ then
          	docker-compose stop React-App
 	 	echo "Removing React-App service"
 	 	docker-compose rm React-App
-		docker-compose -f /home/ubuntu/React-App/docker-compose.yml up -d  React-App
+		docker-compose up -d  React-App
 	elif [[ "$input" == "n" ]];
 	then	
 	        echo "The container are"
@@ -29,7 +29,7 @@ then
 else
 	echo "React container not found"
 	echo "Starting the container"
-	docker-compose -f /home/ubuntu/React-App/docker-compose.yml up -d  React-App
+	docker-compose up -d  React-App
         docker ps -a
 fi
 
