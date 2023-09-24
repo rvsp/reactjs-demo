@@ -9,7 +9,7 @@ pipeline {
                     echo "Git Checkout Result: ${branchName}"
                     echo "Current Branch Name: ${branchName.GIT_BRANCH}"
                     def trimmedBranchName = branchName.GIT_BRANCH.trim()
-                    echo "Trimmed branch name: ${trimmedBranchName}
+                    echo "Trimmed branch name: ${trimmedBranchName}"
                 }
             }
         }
