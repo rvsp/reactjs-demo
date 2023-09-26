@@ -27,10 +27,10 @@ pipeline {
                     else if ( cleanedBranchName == 'dev_branch' )
                       {
                         echo "${cleanedBranchName}"
-			git checkout master
-			git pull origin master
-			git merge dev_branch
-			git push origin master
+			 sh 'git checkout master'
+			 sh 'git pull origin master'
+			 sh 'git merge dev_branch'
+			 sh 'git push origin master'
 
 	withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
          
