@@ -30,7 +30,6 @@ pipeline {
 			 sh 'git checkout master'
 			 sh 'git pull origin master'
 			 sh 'git push origin dev_branch:master'
-
 	withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
          
 	                 sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
