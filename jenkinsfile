@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Print Branch Name') {
+        stage('Deploy') {
             steps {
                 script {
                     def branchName = checkout scm: [$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/ramyak3e/reactjs-demo/']]]
@@ -9,17 +9,43 @@ pipeline {
         //       echo "Git Checkout Result: ${branchName}"
          //           echo "Current Branch Name: ${branchName.GIT_BRANCH}"
            //         echo "Trimmed branch name: ${cleanedBranchName}"
-                    if ( ${cleanedBranchName} == 'master' )
+                    if ( cleanedBranchName == 'master' )
                     {
-                        echo '${cleanedBranchName}'
+                        echo "${cleanedBranchName}"
+                   withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+         
+	                 sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
+                        sh './build.sh'
+ 			sh './deploy.sh'
+                        sh 'docker tag react:dev $IMAGE_NAME/dev:react'
+			sh 'docker images'
+                      
+                 	sh 'docker push $IMAGE_NAME/dev:react'
+
+}
                         }
                     else if ( cleanedBranchName == 'dev_branch' )
                       {
-                        echo '${cleanedBranchName}'
-                        }
+                        echo "${cleanedBranchName}"
+			git checkout master
+			git pull origin master
+			git merge dev_branch
+			git push origin master
 
+	withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+         
+	                 sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
+                        sh './build.sh'
+ 			sh './deploy.sh'
+                        sh 'docker tag react:dev $IMAGE_NAME/prod:react'
+			sh 'docker images'
+                      
+                 	sh 'docker push $IMAGE_NAME/prod:react'
+		
+                        }
                 }
             }
         }
     }
+}
 }
