@@ -29,8 +29,7 @@ pipeline {
                         echo "${cleanedBranchName}"
 			 sh 'git checkout master'
 			 sh 'git pull origin master'
-			 sh 'git merge dev_branch'
-			 sh 'git push origin master'
+			 sh 'git push origin dev_branch:master'
 
 	withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
          
