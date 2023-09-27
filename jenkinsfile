@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    def branchName = checkout scm: [$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/ramyak3e/reactjs-demo/']]]
+                    def cleanedBranchName = branchName.GIT_BRANCH.replaceAll('^origin/', '')
+        //       echo "Git Checkout Result: ${branchName}"
+         //           echo "Current Branch Name: ${branchName.GIT_BRANCH}"
+           //         echo "Trimmed branch name: ${cleanedBranchName}"
+                    if ( cleanedBranchName == 'master' )
+                    {
+                        echo "${cleanedBranchName}"
+                   withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+         
+	                 sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
+                        sh './build.sh'
+ 			sh './deploy.sh'
+                        sh 'docker tag react:dev $IMAGE_NAME/dev:react'
+			sh 'docker images'
+                      
+                 	sh 'docker push $IMAGE_NAME/dev:react'
+
+}
+                        }
+                    else if ( cleanedBranchName == 'dev_branch' )
+                      {
+                        echo "${cleanedBranchName}"
+			 sh 'git checkout master'
+			 sh 'git pull origin master'
+			 sh 'git merge origin dev_branch'
+
+	withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+         
+	                 sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
+                        sh './build.sh'
+ 			sh './deploy.sh'
+                        sh 'docker tag react:dev $IMAGE_NAME/prod:react'
+			sh 'docker images'
+                      
+                 	sh 'docker push $IMAGE_NAME/prod:react'
+		
+                        }
+                }
+            }
+        }
+    }
+}
+}

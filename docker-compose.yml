@@ -1,0 +1,15 @@
+version: '3.4'
+services:
+  react-app:
+    container_name: reactapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 80:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
