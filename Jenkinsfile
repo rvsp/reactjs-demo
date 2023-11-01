@@ -8,6 +8,7 @@ pipeline {
     }
 
     stage('Build') {
+      agent any
       steps {
         sh '''ls -lh
 pwd'''
