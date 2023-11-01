@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git(changelog: true, url: 'https://github.com/adnaan-sidd/myproject.git', branch: '^Dev|master. *$', poll: true)
+        git(changelog: true, url: 'https://github.com/adnaan-sidd/myproject.git', branch: 'Dev', poll: true)
       }
     }
 
