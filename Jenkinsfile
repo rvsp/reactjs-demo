@@ -17,6 +17,7 @@ pipeline {
         stage('build') {
             steps {
                 sh '''
+                sudo apt install docker.io -y
                 chmod +x build.sh
                 ./build.sh
                 '''
