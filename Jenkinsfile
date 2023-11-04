@@ -2,32 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('checkout') {
-            steps {
-                script {
-                    // Check out the repository from a specific branch
-                    checkout([$class: 'GitSCM', 
-                        branches: [[name: 'dev']], 
-                        userRemoteConfigs: [[url: 'https://github.com/adnaan-s/project.git']]
-                    ])
-                }
-            }
-        }
-
-        stage('build') {
-            steps {
-                sh ''' 
-                docker build -t practice .
-                '''
-            }
-        }
-
-        stage('Initialize') {
+        stage('Initialize Docker') {
             steps {
                 script {
                     def dockerHome = tool 'docker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
                 }
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: dev]], // Use the branch from the webhook payload
+                        userRemoteConfigs: [[url: https://github.com/adnaan-s/project.git]] // Use the URL from the webhook payload
+                    ])
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'docker build -t practice .'
             }
         }
     }
