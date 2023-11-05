@@ -1,0 +1,7 @@
+version: '3'
+services:
+  react-app:
+    image: practice  # Replace with the name of your Docker image
+    ports:
+      - "80:80"
+
