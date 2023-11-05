@@ -41,6 +41,12 @@ pipeline {
                 // Check if the current branch is 'main' (indicating a production release)
                 def currentBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
                 if (currentBranch == 'main') {
+                    // Explicitly check out the 'main' branch
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        userRemoteConfigs: [[url: 'https://github.com/adnaan-s/project.git']]
+                    ])
+                    
                     // Build the Docker image
                     sh 'docker build -t demo2 .'
                     
