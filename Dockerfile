@@ -1,24 +1,15 @@
-# Use an official Node.js runtime as the base image
-FROM node:12.5.0
+FROM node:12.5.0 AS build
 
-# Set the working directory in the container
-WORKDIR /app
+WORKDIR /usr/app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY . /usr/app
 
-# Install project dependencies
 RUN npm install
 
-# Copy the rest of the application code to the working directory
-COPY . .
-
-# Build the React application
 RUN npm run build
 
-# Expose a port (usually 80) for the container to listen on
-EXPOSE 80
+FROM nginx:latest
 
-# Command to start the application
-CMD ["npm", "start"]
+LABEL maintainer="adnaansidd"
 
+COPY --from=build /usr/app/build /usr/share/nginx/html
