@@ -34,31 +34,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        success {
-            script {
-                // Check if the current branch is 'main' (indicating a production release)
-                def currentBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
-                if (currentBranch == 'main') {
-                    // Explicitly check out the 'main' branch
-                    checkout([$class: 'GitSCM',
-                        branches: [[name: 'main']],
-                        userRemoteConfigs: [[url: 'https://github.com/adnaan-s/project.git']]
-                    ])
-                    
-                    // Build the Docker image
-                    sh 'docker build -t demo2 .'
-                    
-                    // Tag the image
-                    sh 'docker tag demo2:latest adnaansidd/prod:lts'
-                    
-                    // Push the image to the production Docker Hub repository
-                    sh 'docker login -u adnaansidd -p 26122001As@'
-                    sh 'docker push adnaansidd/prod:lts'
-                }
-            }
-        }
-    }
-
 }
