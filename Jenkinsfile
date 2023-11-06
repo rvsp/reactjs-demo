@@ -12,7 +12,7 @@ pipeline {
                     // Check out the code from the 'dev' branch in GitHub
                     checkout([$class: 'GitSCM',
                         branches: [[name: 'dev']], 
-                        userRemoteConfigs: [[url: 'https://github.com/adnaan-s/project.git']]
+                        userRemoteConfigs: [[url: 'https://github.com/adnaan-sidd/myproject.git']]
                     ])
                 }
             }
