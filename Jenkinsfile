@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    tools{
+    tools {
         nodejs 'nodejs'
     }
 
@@ -39,17 +39,6 @@ pipeline {
                 sh "docker tag myproject:latest adnaansidd/dev:lts"
                 sh "docker login -u adnaansidd -p 26122001As@"
                 sh "docker push adnaansidd/dev:lts"
-            }
-        }
-
-        stage('Deploy') {
-            when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            }
-            steps {
-                // Add deployment steps here
-                sh "docker run -d -p 80:80 --name app adnaansidd/prod:lts"
-                // Deploy to production, staging, or other environments
             }
         }
     }
