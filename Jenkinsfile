@@ -8,12 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    // Check out the code from the 'dev' branch in GitHub
-                    checkout([$class: 'GitSCM',
-                        branches: [[name: 'dev']], 
-                        userRemoteConfigs: [[url: 'https://github.com/adnaan-sidd/myproject.git']]
-                    ])
+                git branch: 'dev', credentialsId: 'GIT', url: 'https://github.com/adnaan-sidd/myproject.git'
                 }
             }
         }
