@@ -11,7 +11,6 @@ pipeline {
                 git 'https://github.com/adnaan-sidd/myproject.git'
             }
         }
-    }
     
     stage('Build and Test') {
             steps {
