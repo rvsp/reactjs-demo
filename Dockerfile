@@ -10,6 +10,6 @@ RUN npm run build
 
 FROM nginx:latest
 
-LABEL maintainer="adnaansidd"
+LABEL maintainer="adnaan-sidd"
 
 COPY --from=build /usr/app/build /usr/share/nginx/html
