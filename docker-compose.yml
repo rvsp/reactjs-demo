@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  web:
+    image: reactjs:third
+    ports:
+      - "80:80"
