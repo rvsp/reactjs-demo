@@ -2,7 +2,6 @@ echo "Building docker images"
 
 docker build -t pradeep .
 
-docker stop pradeep
+docker-compose down || true
 
-docker run -itd -p 80:80 pradeep
-
+docker-compose up -d
