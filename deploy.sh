@@ -1,6 +1,6 @@
 echo "starting the deployment"
 
-docker tag pradeep pradeepansrsp/capstone-prod
+// docker tag pradeep pradeepansrsp/capstone-prod
 
 docker login -u pradeepansrsp -p 123Subbu#
 
