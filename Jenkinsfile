@@ -6,7 +6,9 @@ pipeline {
    
      stage('Install Dependencies') { 
         steps { 
-           sh 'npm install' 
+           sh 'npm install'
+           sh 'npm audit fix --force'
+           sh 'npm run build'
         }
      }
      
