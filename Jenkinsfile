@@ -8,6 +8,10 @@ pipeline {
         steps {
            bat 'npm install'
            bat 'npm audit fix --force'
+        }
+     }
+      stage('packaging application') {
+         steps {
            bat 'npm run build'
         }
      }
