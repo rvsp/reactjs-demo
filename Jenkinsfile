@@ -7,7 +7,6 @@ pipeline {
      stage('Install Dependencies') {
         steps {
            bat 'npm install'
-           bat 'npm audit fix --force'
         }
      }
       stage('packaging application') {
